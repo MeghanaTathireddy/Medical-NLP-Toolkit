@@ -1,0 +1,9 @@
+spacy==3.7.2
+transformers==4.35.2
+torch>=2.1.0
+spacy-transformers==1.2.5
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz
+
+# Optional: scispaCy for better clinical coverage (loaded automatically if installed)
+# scispacy==0.5.4
+# en-core-sci-lg @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz

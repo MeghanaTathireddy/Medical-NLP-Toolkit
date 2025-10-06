@@ -1,0 +1,47 @@
+Task 1 (task1_medical_ner.py)
+
+Q: How would you handle ambiguous or missing medical data in the transcript?
+A:
+Ambiguous or missing data is filled with explicit placeholders (“Unknown” / “Not specified”) instead of guessing. 
+Confidence scores and supporting context from the transcript are attached where possible. 
+To reduce ambiguity, entities are normalized to medical vocabularies (SNOMED/UMLS via scispaCy linker). 
+Rule-based patterns (regex, keyword lists) supplement NER for edge cases, and temporal/negation cues (e.g., “no longer taking”, “two months ago”) are used to determine current status. 
+Low-confidence fields are flagged for clinician review.
+
+Q: What pre-trained NLP models would you use for medical summarization?
+A:
+For entity recognition, scispaCy models like en_core_sci_lg or en_core_sci_md are preferred;
+ spaCy’s en_core_web_sm serves as a fallback. 
+ For summarization, transformer models such as BART-large-CNN or Flan-T5 can be adapted to medical notes, with BioBART or Clinical-T5 offering stronger domain coverage if available. 
+ Encoders like BioBERT, ClinicalBERT, or SciBERT improve handling of clinical terminology and abbreviations.
+
+Task 2 (task2_sentiment_intent.py)
+
+Q: How would you fine-tune BERT for medical sentiment detection?
+A:
+Start with distilbert-base-uncased, standard BERT, or ClinicalBERT. 
+Fine-tune with a classification head on annotated patient text using labels such as Anxious, Neutral, Reassured. 
+Training should balance classes (via weights or focal loss) and optimize macro-F1, paying special attention to recall for Anxious. 
+Preprocessing includes filtering out physician prompts, handling negations, and capturing sentiment-specific phrase patterns. 
+Lightweight rule-based overrides can be added for explicit anxiety cues.
+
+Q: What datasets would you use for training a healthcare-specific sentiment model?
+A:
+Domain adaptation can be done with MIMIC-III/IV or i2b2 clinical notes (licensed). 
+For supervised sentiment labels, de-identified clinician–patient dialogue datasets are ideal. 
+If limited, related corpora such as PsyTAR, CADEC (adverse drug reactions), CLPsych, and mental-health oriented Reddit/Twitter data can be used for auxiliary fine-tuning.
+
+Task 3 (task3_soap_generation.py)
+
+Q: How would you train an NLP model to map medical transcripts into SOAP format?
+A:
+Use supervised training with annotated transcripts mapped to SOAP sections (Subjective, Objective, Assessment, Plan). 
+A seq2seq model like T5/BART can be fine-tuned for direct transcript-to-SOAP generation, while span extraction methods can target key slots. 
+In cases with limited data, hybrid methods combine NER/regex for high-precision fields with a generator for ambiguous text. 
+Constrained decoding ensures valid JSON or section structure.
+
+Q: What rule-based or deep-learning techniques would improve the accuracy of SOAP note generation?
+A:
+Regex and keyword-based extraction (using spaCy/scispaCy) can reliably capture clinical phrases and section cues. 
+For contextual mapping, transformer-based encoder–decoder models (e.g., ClinicalBERT + T5) handle flexible segmentation and summarization. 
+A hybrid approach cross-checks generated outputs against extracted entities, applies temporal/negation handling, and falls back to rule-based methods for critical fields when model confidence is low.
