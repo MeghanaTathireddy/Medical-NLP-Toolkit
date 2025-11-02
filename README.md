@@ -1,4 +1,4 @@
-# Physician Notetaker — Assignment Submission
+# Physician Notetaker \
 
 This folder contains the code and resources for all three tasks:  
 **Medical NLP Summarization, Sentiment & Intent Analysis, and SOAP Note Generation.**
@@ -171,3 +171,4 @@ python emitrr/task3_soap_generation.py
 - Temporal parsing for durations/timeframes; prognosis phrasing extraction.
 - DistilBERT sentiment → mapped to Anxious/Neutral/Reassured with anxiety-priority + negation handling; regex intents.
 - SOAP note assembly from extracted elements; readable formatting + JSON.
+
